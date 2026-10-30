@@ -1,41 +1,36 @@
-import Header from "@/components/Header";
+import DemoBar from "@/components/DemoBar";
+import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import LeadMagnet from "@/components/LeadMagnet";
-import Science from "@/components/Science";
-import Sessions from "@/components/Sessions";
-import Audience from "@/components/Audience";
-import Education from "@/components/Education";
-import Comparison from "@/components/Comparison";
+import TrustBar from "@/components/TrustBar";
+import Features from "@/components/Features";
+import Steps from "@/components/Steps";
+import Product from "@/components/Product";
+import Testimonials from "@/components/Testimonials";
+import TikTokGrid from "@/components/TikTokGrid";
 import Faq from "@/components/Faq";
+import CtaBand from "@/components/CtaBand";
 import Footer from "@/components/Footer";
-import WhatsAppWidget from "@/components/WhatsAppWidget";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
+import { OrderProvider } from "@/components/order/OrderProvider";
 
 export default function Home() {
   return (
-    <>
-      {/* Ambient glow orbs */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-      >
-        <div className="absolute top-[10%] -left-[200px] size-[450px] rounded-full bg-cyan/12 blur-[120px]" />
-        <div className="absolute top-[40%] -right-[250px] size-[500px] rounded-full bg-orange/8 blur-[120px]" />
-        <div className="absolute bottom-[5%] left-[15%] size-[400px] rounded-full bg-rose/8 blur-[120px]" />
-      </div>
-
-      <Header />
-      <main className="relative">
+    <OrderProvider>
+      <DemoBar />
+      <Nav />
+      <main>
         <Hero />
-        <LeadMagnet />
-        <Sessions />
-        <Science />
-        <Audience />
-        <Education />
-        <Comparison />
+        <TrustBar />
+        <Features />
+        <Steps />
+        <Product />
+        <Testimonials />
+        <TikTokGrid />
         <Faq />
+        <CtaBand />
       </main>
       <Footer />
-      <WhatsAppWidget />
-    </>
+      <WhatsAppFloat />
+    </OrderProvider>
   );
 }

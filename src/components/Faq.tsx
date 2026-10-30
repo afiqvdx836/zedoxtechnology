@@ -1,44 +1,27 @@
-"use client";
-
-import { useState } from "react";
-import { faqs, faqSection } from "@/config/site";
-import Reveal from "./ui/Reveal";
-import SectionHeader from "./ui/SectionHeader";
+import { faqs } from "@/config/site";
+import SectionHead from "./ui/SectionHead";
 
 export default function Faq() {
-  const [open, setOpen] = useState<number | null>(null);
-
   return (
-    <section id="faq" className="relative scroll-mt-20 py-16 md:py-24">
-      <div className="container-page">
-        <SectionHeader {...faqSection} />
-        <Reveal className="mx-auto max-w-[800px] space-y-4">
-          {faqs.map((faq, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={faq.q} className="overflow-hidden rounded-2xl border border-line transition hover:border-line-strong">
-                <button
-                  type="button"
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-${i}`}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 bg-card p-6 text-left font-heading text-lg font-semibold text-white transition hover:bg-card-hover"
-                >
-                  {faq.q}
-                  <i className={`fa-solid fa-chevron-down text-rose transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} aria-hidden />
-                </button>
-                <div
-                  id={`faq-${i}`}
-                  className={`grid bg-[rgb(9_13_22/0.3)] transition-[grid-template-rows] duration-300 ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="border-t border-line p-6 text-[0.95rem]">{faq.a}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </Reveal>
+    <section id="faq" className="scroll-mt-16 py-[60px] sm:py-20">
+      <div className="wrap">
+        <SectionHead eyebrow={faqs.eyebrow} title={faqs.title} />
+        <div className="mx-auto max-w-[760px]">
+          {faqs.items.map((f, i) => (
+            <details key={f.q} open={i === 0} className="group border-b border-line py-5">
+              <summary className="flex cursor-pointer list-none justify-between gap-4 text-base font-semibold [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <span aria-hidden className="text-[22px] leading-none text-accent group-open:hidden">
+                  +
+                </span>
+                <span aria-hidden className="hidden text-[22px] leading-none text-accent group-open:inline">
+                  –
+                </span>
+              </summary>
+              <p className="mt-2.5 text-[15px] text-muted">{f.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );

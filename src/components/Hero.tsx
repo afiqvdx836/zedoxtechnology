@@ -1,43 +1,46 @@
-import { contact, hero } from "@/config/site";
-import Rich from "./ui/Rich";
-import Badge from "./ui/Badge";
-import Button from "./ui/Button";
-import DeviceIllustration from "./illustrations/DeviceIllustration";
+import { hero } from "@/config/site";
+import Bottle from "./ui/Bottle";
+import OrderButton from "./order/OrderButton";
+import { btn } from "./ui/styles";
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pt-32 pb-14 lg:pb-0">
-      <div className="container-page grid items-center gap-12 text-center lg:grid-cols-[1.25fr_0.75fr] lg:text-left">
-        <div className="relative z-10">
-          <div className="mb-5 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
-            <Badge tone="rose">{hero.badge}</Badge>
-            <span className="mb-5 flex items-center gap-1.5 rounded-full border border-line bg-white/3 px-3 py-1 text-xs text-fg-2">
-              <i className="fa-brands fa-tiktok text-[#ff3b5c]" aria-hidden /> @{contact.tiktokHandle} ({contact.tiktokFollowers} Followers)
-            </span>
+    <header className="relative overflow-hidden pt-[72px] pb-16">
+      <div aria-hidden className="pointer-events-none absolute -top-[150px] -right-[200px] size-[700px] bg-[radial-gradient(circle,rgb(46_197_255/0.22),transparent_60%)]" />
+      <div className="wrap relative grid items-center gap-10 min-[900px]:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-mint/25 bg-mint/8 px-3 py-1.5 text-xs font-semibold text-mint">
+            <i className="size-[7px] rounded-full bg-mint shadow-[0_0_10px_var(--color-mint)]" />
+            {hero.pill}
           </div>
-          <h1 className="mb-6 text-[2.5rem] leading-[1.15] md:text-[3.6rem]">
-            {hero.titleLead} <span className="grad-orange block">{hero.titleAccent}</span>
+          <h1 className="mb-[18px] text-[clamp(34px,5vw,56px)] leading-[1.08] tracking-[-1.2px]">
+            {hero.titleLead}
+            <br />
+            <span className="text-grad">{hero.titleAccent}</span>
           </h1>
-          <p className="mx-auto mb-9 max-w-[580px] text-lg lg:mx-0">
-            <Rich text={hero.description} />
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
-            <Button href={hero.primaryCta.href} icon={hero.primaryCta.icon}>
-              {hero.primaryCta.label}
-            </Button>
-            <Button href={hero.secondaryCta.href} icon={hero.secondaryCta.icon} variant="outline">
+          <p className="mb-7 max-w-[520px] text-[17px] text-muted">{hero.lead}</p>
+          <div className="mb-8 flex flex-wrap gap-3">
+            <OrderButton>{hero.primaryCta}</OrderButton>
+            <a href={hero.secondaryCta.href} className={`${btn.base} ${btn.ghost}`}>
               {hero.secondaryCta.label}
-            </Button>
+            </a>
+          </div>
+          <div className="flex flex-wrap gap-5 sm:gap-8">
+            {hero.stats.map((s) => (
+              <div key={s.label}>
+                <b className="block text-2xl font-extrabold">{s.value}</b>
+                <span className="text-[13px] text-muted">{s.label}</span>
+              </div>
+            ))}
           </div>
         </div>
-
-        <div className="relative flex justify-center">
-          <div aria-hidden className="absolute top-1/4 left-1/4 -z-10 size-[200px] rounded-full bg-cyan/25 blur-[70px]" />
-          <div className="aspect-[1/1.15] w-full max-w-[380px] rounded-[36px] border border-line-strong bg-gradient-to-br from-white/3 to-white/1 p-7 shadow-[0_30px_60px_rgb(0_0_0/0.5)] backdrop-blur-md">
-            <DeviceIllustration />
+        <div className="relative grid h-[340px] place-items-center min-[900px]:h-[460px]">
+          <div aria-hidden className="absolute bottom-[30px] h-[30px] w-[220px] bg-[radial-gradient(ellipse,rgb(46_197_255/0.45),transparent_70%)] blur-[6px]" />
+          <div className="h-full animate-float drop-shadow-[0_30px_40px_rgb(0_0_0/0.5)]">
+            <Bottle id="hero-bottle" animated />
           </div>
         </div>
       </div>
-    </section>
+    </header>
   );
 }
