@@ -87,14 +87,9 @@ export default function Product() {
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-2.5">
-              <button type="button" onClick={order} className={`${btn.base} ${btn.primary}`}>
-                {product.ctaWhatsapp}
-              </button>
-              <button type="button" onClick={order} className={`${btn.base} ${btn.ghost}`}>
-                {product.ctaOnline}
-              </button>
-            </div>
+            <button type="button" onClick={order} className={`${btn.base} ${btn.primary} w-full sm:w-auto`}>
+              {product.ctaWhatsapp}
+            </button>
 
             <ul className="mt-5 grid grid-cols-2 gap-2 text-[13px] text-muted">
               {product.specs.map((s) => (

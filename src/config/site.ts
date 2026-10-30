@@ -13,8 +13,8 @@ export const demo = {
 };
 
 export const contact = {
-  whatsapp: "", // PLACEHOLDER: e.g. "60123456789". Empty = demo modal.
-  whatsappDisplay: "+60 XX-XXX XXXX", // PLACEHOLDER
+  whatsapp: "60176663171", // digits only, country code first. Empty = demo preview modal.
+  whatsappDisplay: "+60 17-666 3171",
   tiktokHandle: "zedoxtechnology",
   ssm: "XXXXXXXX-X", // PLACEHOLDER
 };
@@ -164,7 +164,6 @@ export const product = {
     { id: "2", label: "Beli 2", price: "RM XXX", note: "Jimat RM XX · untuk pasangan atau ibu bapa", badge: "Popular" },
   ] as { id: string; label: string; price: string; note: string; badge?: string }[],
   ctaWhatsapp: "Order via WhatsApp",
-  ctaOnline: "Bayar Online",
 };
 
 // Zedox vs a typical cheap online bottle. Keep every row factual and checkable.
