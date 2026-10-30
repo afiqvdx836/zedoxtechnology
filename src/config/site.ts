@@ -110,6 +110,15 @@ export const features = {
 export const cycle = {
   eyebrow: "Cara Guna",
   title: "Isi. Tekan. Minum.",
+  // Real clip of the cycle, scrubbed by scroll. Files go in /public. Empty src = drawn bottle.
+  video: {
+    src: "", // e.g. "/media/cycle.mp4" (landscape or square)
+    srcMobile: "", // optional portrait crop for phones
+    poster: "", // first frame as a .jpg, shown while the clip loads
+    showTimer: true, // the 03:00 badge beside the bottle
+  },
+  // Where the Isi and Tekan phases end, as a share of the scroll (and of the clip).
+  phaseEnds: [0.28, 0.85] as [number, number],
   phases: [
     {
       label: "Isi",

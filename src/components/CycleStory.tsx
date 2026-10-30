@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cycle, product } from "@/config/site";
 import Bottle, { formatCycle } from "./ui/Bottle";
 import SpotlightStage from "./ui/SpotlightStage";
+import ScrollVideo from "./ui/ScrollVideo";
 
 // Share of the scroll for each phase: fill water, run the 3-minute cycle, done.
-const FILL_END = 0.28;
-const RUN_END = 0.85;
+const [FILL_END, RUN_END] = cycle.phaseEnds;
 
 function stateAt(p: number) {
   if (p < FILL_END) return { phase: 0, level: p / FILL_END, seconds: product.cycleSeconds, active: false, intensity: 0 };
@@ -23,6 +23,9 @@ function stateAt(p: number) {
 export default function CycleStory() {
   const ref = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const onVideoFail = useCallback(() => setVideoFailed(true), []);
+  const useVideo = Boolean(cycle.video.src) && !videoFailed;
 
   useEffect(() => {
     let frame = 0;
@@ -85,12 +88,25 @@ export default function CycleStory() {
           </div>
 
           <SpotlightStage className="order-1 h-[46svh] min-[900px]:order-2 min-[900px]:h-[78svh]">
-            <div className="relative h-[36svh] drop-shadow-[0_30px_40px_rgb(0_0_0/0.6)] min-[900px]:h-[62svh]">
-              <Bottle id="cycle-bottle" level={s.level} seconds={s.seconds} active={s.active} intensity={s.intensity} />
-              <span className="absolute top-[4%] -right-24 hidden rounded-full border border-accent/30 bg-deep/80 px-3 py-1 font-mono text-sm text-accent min-[900px]:block">
+            {useVideo ? (
+              <ScrollVideo
+                src={cycle.video.src}
+                srcMobile={cycle.video.srcMobile}
+                poster={cycle.video.poster}
+                progress={progress}
+                onFail={onVideoFail}
+                className="absolute inset-0 size-full object-cover"
+              />
+            ) : (
+              <div className="relative h-[36svh] drop-shadow-[0_30px_40px_rgb(0_0_0/0.6)] min-[900px]:h-[62svh]">
+                <Bottle id="cycle-bottle" level={s.level} seconds={s.seconds} active={s.active} intensity={s.intensity} />
+              </div>
+            )}
+            {cycle.video.showTimer && (
+              <span className="absolute top-5 right-5 rounded-full border border-accent/30 bg-deep/80 px-3 py-1 font-mono text-sm text-accent backdrop-blur">
                 {s.phase === 2 ? "Siap ✓" : formatCycle(s.seconds)}
               </span>
-            </div>
+            )}
           </SpotlightStage>
         </div>
       </div>
