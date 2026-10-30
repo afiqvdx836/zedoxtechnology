@@ -3,31 +3,55 @@
 import { product } from "@/config/site";
 import { useOrder } from "./order/OrderProvider";
 import Bottle from "./ui/Bottle";
+import SpotlightStage from "./ui/SpotlightStage";
 import { btn } from "./ui/styles";
 
 export default function Product() {
-  const { color, qty, setColor, setQty, order } = useOrder();
+  const { color, qty, bundleId, setBundleId, setColor, setQty, order } = useOrder();
   const active = product.colors.find((c) => c.name === color) ?? product.colors[0];
+  const bundle = product.bundles.find((b) => b.id === bundleId) ?? product.bundles[0];
 
   return (
-    <section id="produk" className="scroll-mt-16 bg-bg-2 py-[60px] sm:py-20">
+    <section id="produk" className="scroll-mt-16 bg-bg-2 py-20 sm:py-28">
       <div className="wrap">
         <div className="grid items-center gap-10 rounded-3xl border border-line bg-card p-6 min-[900px]:grid-cols-2 min-[900px]:p-10">
-          <div className="grid h-[280px] place-items-center rounded-[18px] bg-[radial-gradient(circle_at_50%_60%,rgb(46_197_255/0.18),transparent_65%)] min-[900px]:h-[380px]">
-            <div className="h-[85%]">
+          <SpotlightStage className="h-[340px] min-[900px]:h-[520px]">
+            <div className="h-[260px] min-[900px]:h-[400px] drop-shadow-[0_30px_40px_rgb(0_0_0/0.6)]">
               <Bottle id="product-bottle" metal={active.hex} />
             </div>
-          </div>
+          </SpotlightStage>
 
           <div>
             <div className="mb-3 inline-block rounded-md bg-promo/12 px-2.5 py-1 text-xs font-bold text-promo">{product.tag}</div>
             <h2 className="mb-1 text-[clamp(26px,3.6vw,38px)] leading-tight tracking-tight">{product.name}</h2>
             <p className="text-muted">{product.model}</p>
             <div className="mt-1.5 mb-0.5 text-4xl font-extrabold">
-              {product.price}
+              {bundle.price}
               <s className="ml-2.5 text-lg font-medium text-muted">{product.compareAt}</s>
             </div>
             <p className="mb-[22px] text-xs text-muted">{product.priceNote}</p>
+
+            <fieldset className="mb-[22px]">
+              <legend className="mb-2 text-[13px] font-semibold text-muted">Pakej</legend>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {product.bundles.map((b) => (
+                  <label
+                    key={b.id}
+                    className={`relative cursor-pointer rounded-2xl border p-4 transition has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent ${
+                      b.id === bundleId ? "border-accent bg-accent/8" : "border-line hover:border-muted"
+                    }`}
+                  >
+                    <input type="radio" name="bundle" value={b.id} checked={b.id === bundleId} onChange={() => setBundleId(b.id)} className="sr-only" />
+                    {b.badge && (
+                      <span className="absolute -top-2.5 right-3 rounded-full bg-grad px-2 py-0.5 text-[11px] font-bold text-ink">{b.badge}</span>
+                    )}
+                    <span className="block font-display text-lg font-bold">{b.label}</span>
+                    <span className="block text-sm text-fg">{b.price}</span>
+                    <span className="mt-1 block text-xs text-muted">{b.note}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
 
             <fieldset className="mb-[22px]">
               <legend className="mb-2 text-[13px] font-semibold text-muted">

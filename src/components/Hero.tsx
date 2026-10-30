@@ -1,45 +1,68 @@
-import { hero } from "@/config/site";
+import { hero, media, trust } from "@/config/site";
 import Bottle from "./ui/Bottle";
+import Icon from "./ui/Icon";
+import SpotlightStage from "./ui/SpotlightStage";
 import OrderButton from "./order/OrderButton";
 import { btn } from "./ui/styles";
 
 export default function Hero() {
   return (
-    <header className="relative overflow-hidden pt-[72px] pb-16">
-      <div aria-hidden className="pointer-events-none absolute -top-[150px] -right-[200px] size-[700px] bg-[radial-gradient(circle,rgb(46_197_255/0.22),transparent_60%)]" />
-      <div className="wrap relative grid items-center gap-10 min-[900px]:grid-cols-[1.1fr_0.9fr]">
+    <header className="relative overflow-hidden pt-14 pb-16 md:pt-20 md:pb-24">
+      <div className="wrap grid items-center gap-10 min-[900px]:grid-cols-[1.05fr_0.95fr] min-[900px]:gap-14">
         <div>
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-mint/25 bg-mint/8 px-3 py-1.5 text-xs font-semibold text-mint">
-            <i className="size-[7px] rounded-full bg-mint shadow-[0_0_10px_var(--color-mint)]" />
-            {hero.pill}
-          </div>
-          <h1 className="mb-[18px] text-[clamp(34px,5vw,56px)] leading-[1.08] tracking-[-1.2px]">
+          <p className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+            <span className="flex items-center gap-1.5 font-semibold text-fg">
+              <span className="text-[#ff3b5c]" aria-hidden>
+                ♥
+              </span>
+              {hero.proof}
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-mint/25 bg-mint/8 px-3 py-1 text-xs font-semibold text-mint">
+              <i className="size-[7px] rounded-full bg-mint shadow-[0_0_10px_var(--color-mint)]" />
+              {hero.pill}
+            </span>
+          </p>
+          <h1 className="mb-6 text-[clamp(42px,5.6vw,72px)] leading-[1]">
             {hero.titleLead}
             <br />
             <span className="text-grad">{hero.titleAccent}</span>
           </h1>
-          <p className="mb-7 max-w-[520px] text-[17px] text-muted">{hero.lead}</p>
+          <p className="mb-8 max-w-[520px] text-lg text-muted">{hero.lead}</p>
           <div className="mb-8 flex flex-wrap gap-3">
-            <OrderButton>{hero.primaryCta}</OrderButton>
-            <a href={hero.secondaryCta.href} className={`${btn.base} ${btn.ghost}`}>
+            <OrderButton className="!px-7 !py-4 !text-base">{hero.primaryCta}</OrderButton>
+            <a href={hero.secondaryCta.href} className={`${btn.base} ${btn.ghost} !px-7 !py-4 !text-base`}>
               {hero.secondaryCta.label}
             </a>
           </div>
-          <div className="flex flex-wrap gap-5 sm:gap-8">
-            {hero.stats.map((s) => (
-              <div key={s.label}>
-                <b className="block text-2xl font-extrabold">{s.value}</b>
-                <span className="text-[13px] text-muted">{s.label}</span>
-              </div>
+          <ul className="grid gap-x-6 gap-y-2 text-sm text-muted sm:grid-cols-2">
+            {trust.map((t) => (
+              <li key={t} className="flex items-center gap-2">
+                <span className="text-mint">
+                  <Icon name="check" size={16} strokeWidth={2.5} />
+                </span>
+                {t}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
-        <div className="relative grid h-[340px] place-items-center min-[900px]:h-[460px]">
-          <div aria-hidden className="absolute bottom-[30px] h-[30px] w-[220px] bg-[radial-gradient(ellipse,rgb(46_197_255/0.45),transparent_70%)] blur-[6px]" />
-          <div className="h-full animate-float drop-shadow-[0_30px_40px_rgb(0_0_0/0.5)]">
-            <Bottle id="hero-bottle" animated />
-          </div>
-        </div>
+
+        <SpotlightStage className="h-[440px] min-[900px]:h-[600px]">
+          {media.heroVideo ? (
+            <video
+              className="absolute inset-0 -z-10 size-full object-cover"
+              src={media.heroVideo}
+              poster={media.heroPoster || undefined}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <div className="h-[340px] animate-float drop-shadow-[0_30px_40px_rgb(0_0_0/0.6)] min-[900px]:h-[460px]">
+              <Bottle id="hero-bottle" active />
+            </div>
+          )}
+        </SpotlightStage>
       </div>
     </header>
   );

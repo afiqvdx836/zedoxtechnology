@@ -1,10 +1,11 @@
-import DemoBar from "@/components/DemoBar";
+import PromoBar from "@/components/PromoBar";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
+import Marquee from "@/components/Marquee";
 import Features from "@/components/Features";
-import Steps from "@/components/Steps";
+import CycleStory from "@/components/CycleStory";
 import Product from "@/components/Product";
+import Compare from "@/components/Compare";
 import Testimonials from "@/components/Testimonials";
 import TikTokGrid from "@/components/TikTokGrid";
 import Faq from "@/components/Faq";
@@ -16,14 +17,15 @@ import { OrderProvider } from "@/components/order/OrderProvider";
 export default function Home() {
   return (
     <OrderProvider>
-      <DemoBar />
+      <PromoBar />
       <Nav />
       <main>
         <Hero />
-        <TrustBar />
+        <Marquee />
         <Features />
-        <Steps />
+        <CycleStory />
         <Product />
+        <Compare />
         <Testimonials />
         <TikTokGrid />
         <Faq />

@@ -34,18 +34,26 @@ export const nav = [
   { label: "FAQ", href: "#faq" },
 ];
 
+// Optional top bar with a live countdown. Set endsAt to null to hide it.
+export const promo = {
+  text: "Promo Pelancaran",
+  endsAt: "2026-11-30T23:59:59+08:00" as string | null, // PLACEHOLDER
+};
+
+// Real product media. Files go in /public. Empty = the drawn spotlight bottle is used.
+export const media = {
+  heroVideo: "", // e.g. "/media/hero-bubbles.mp4" (macro bubbles, 10–15 s loop)
+  heroPoster: "", // e.g. "/media/hero-poster.jpg"
+};
+
 export const hero = {
+  proof: "7K+ likes di TikTok",
   pill: "Stok terhad · Hantar seluruh Malaysia",
   titleLead: "Air minuman harian,",
   titleAccent: "diperkaya hidrogen.",
   lead: "Botol hidrogen mudah alih — tekan satu butang, tunggu beberapa minit, dan nikmati air kaya hidrogen di mana-mana sahaja. Di rumah, di pejabat, atau di gym.",
   primaryCta: "Order via WhatsApp →",
   secondaryCta: { label: "Tengok cara guna", href: "#cara" },
-  stats: [
-    { value: "1.7K+", label: "Pengikut TikTok" },
-    { value: "7K+", label: "Likes" },
-    { value: "1 Tahun", label: "Warranty*" },
-  ],
 };
 
 export const trust = [
@@ -53,6 +61,17 @@ export const trust = [
   "Bayaran FPX / e-wallet",
   "Warranty & support WhatsApp",
   "Caj USB-C",
+];
+
+// Scrolling strip under the hero.
+export const marquee = [
+  "Isi",
+  "Tekan",
+  "Minum",
+  "Siap dalam 3 minit",
+  "Caj USB-C",
+  "Membran SPE/PEM",
+  "Kaca borosilikat",
 ];
 
 export type IconName = "membrane" | "clock" | "phone" | "drop";
@@ -70,6 +89,7 @@ export const features = {
     },
     {
       icon: "clock" as IconName,
+      stat: "3:00", // the large bento card
       title: "Siap dalam 3 minit",
       body: "Satu tekan butang — kitaran automatik dengan paparan masa.",
     },
@@ -86,19 +106,23 @@ export const features = {
   ],
 };
 
-export const steps = {
+// Pinned scroll story. Each phase takes a share of the scroll (see CycleStory.tsx).
+export const cycle = {
   eyebrow: "Cara Guna",
-  title: "Semudah 1, 2, 3",
-  items: [
+  title: "Isi. Tekan. Minum.",
+  phases: [
     {
-      title: "Isi air",
-      body: "Isi dengan air minuman bersih (air suling / air mineral). Elakkan air bergas atau minuman manis.",
+      label: "Isi",
+      title: "Isi air bersih",
+      body: "Air suling atau air mineral. Elakkan air panas, air bergas atau minuman manis.",
     },
     {
-      title: "Tekan butang",
-      body: "Tekan sekali untuk mula. Gelembung halus akan kelihatan dengan lampu biru.",
+      label: "Tekan",
+      title: "Tekan sekali",
+      body: "Kitaran 3 minit bermula. Gelembung halus naik dengan lampu biru.",
     },
     {
+      label: "Minum",
       title: "Minum segar",
       body: "Minum dalam masa 15–30 minit selepas kitaran tamat untuk hasil terbaik.",
     },
@@ -109,7 +133,6 @@ export const product = {
   tag: "HARGA PROMO",
   name: "Botol Hidrogen Portable",
   model: "Model 400ml · Generasi terbaru",
-  price: "RM XXX", // PLACEHOLDER
   compareAt: "RM XXX", // PLACEHOLDER
   priceNote: "*Harga placeholder untuk demo",
   cycleSeconds: 180, // shown on the bottle display
@@ -126,8 +149,30 @@ export const product = {
     "Kaca borosilikat",
     "Warranty 1 tahun*",
   ],
+  // PLACEHOLDER prices. The selected bundle is added to the WhatsApp message.
+  bundles: [
+    { id: "1", label: "1 botol", price: "RM XXX", note: "Untuk diri sendiri" },
+    { id: "2", label: "Beli 2", price: "RM XXX", note: "Jimat RM XX · untuk pasangan atau ibu bapa", badge: "Popular" },
+  ] as { id: string; label: string; price: string; note: string; badge?: string }[],
   ctaWhatsapp: "Order via WhatsApp",
   ctaOnline: "Bayar Online",
+};
+
+// Zedox vs a typical cheap online bottle. Keep every row factual and checkable.
+// ok: true = tick, false = cross, null = unknown.
+export const compare = {
+  eyebrow: "Bandingkan",
+  title: "Zedox vs botol murah online",
+  subtitle: "Bentuk botol mungkin sama. Yang beza ialah apa yang ada di belakangnya.",
+  columns: ["Zedox", "Botol murah online"],
+  rows: [
+    { feature: "Membran SPE/PEM dengan saluran gas sampingan", zedox: { text: "Ya", ok: true }, other: { text: "Tak dinyatakan", ok: null } },
+    { feature: "Bacaan hidrogen (ppb) diuji", zedox: { text: "Akan dikemaskini", ok: null }, other: { text: "Dakwaan tanpa ujian", ok: false } }, // PLACEHOLDER until measured
+    { feature: "Kaca borosilikat food-grade", zedox: { text: "Ya", ok: true }, other: { text: "Kadang-kadang plastik", ok: null } },
+    { feature: "Warranty di Malaysia", zedox: { text: "1 tahun", ok: true }, other: { text: "Tiada", ok: false } },
+    { feature: "Support terus melalui WhatsApp", zedox: { text: "Ya", ok: true }, other: { text: "Chat platform sahaja", ok: false } },
+    { feature: "Penjual berdaftar SSM", zedox: { text: "Ya", ok: true }, other: { text: "Tidak diketahui", ok: null } },
+  ] as { feature: string; zedox: { text: string; ok: boolean | null }; other: { text: string; ok: boolean | null } }[],
 };
 
 // PLACEHOLDER: replace with real customer quotes (with their permission).
@@ -219,6 +264,6 @@ export const footer = {
 };
 
 // WhatsApp order message, built from the current colour and quantity.
-export function orderMessage(color: string, qty: number) {
-  return `Hai Zedox! Saya nak order:\n\n• ${product.name}\n• Warna: ${color}\n• Kuantiti: ${qty}\n\nNama:\nAlamat:`;
+export function orderMessage(color: string, qty: number, bundle: string) {
+  return `Hai Zedox! Saya nak order:\n\n• ${product.name}\n• Pakej: ${bundle}\n• Warna: ${color}\n• Kuantiti: ${qty}\n\nNama:\nAlamat:`;
 }
