@@ -913,3 +913,7 @@
   .zx-option--bundle { min-height: 44px; }
   .zx-close__foot { bottom: var(--sc-3); }
 }
+/* Smallest phones (320px): the mark alone carries the brand so the CTA fits whole. */
+@media (max-width: 359px) {
+  .zx-logo__word { display: none; }
+}
