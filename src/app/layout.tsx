@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
-import "@/scrollcraft/scrollcraft.css";
 import "./globals.css";
-import "./zedox.css";
 import { site } from "@/config/site";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -24,8 +22,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ms" className={`${jakarta.variable} ${bricolage.variable}`}>
-      <body>{children}</body>
+    <html lang="ms">
+      <body className={`${jakarta.variable} ${bricolage.variable} antialiased`}>{children}</body>
     </html>
   );
 }

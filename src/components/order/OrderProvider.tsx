@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { contact, demo, orderMessage, product } from "@/config/site";
+import { btn } from "../ui/styles";
 
 type OrderState = {
   color: string;
@@ -65,7 +66,7 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
             </h3>
             <p className="text-sm text-muted">Dalam versi live, butang ni akan buka WhatsApp dengan mesej siap diisi:</p>
             <pre className="my-4 rounded-xl border border-line bg-bg p-3.5 font-sans text-sm whitespace-pre-wrap text-muted">{preview}</pre>
-            <button type="button" autoFocus className="zx-btn w-full" onClick={() => setPreview(null)}>
+            <button type="button" autoFocus className={`${btn.base} ${btn.primary} w-full`} onClick={() => setPreview(null)}>
               Faham
             </button>
           </div>

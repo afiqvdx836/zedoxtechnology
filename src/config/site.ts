@@ -1,23 +1,19 @@
-// All page copy and product data lives here. Components only render it.
-// Copy is Bahasa Malaysia. Values marked PLACEHOLDER must be replaced with real
-// ones before launch.
+// All page content and product data lives here. Components only render it.
+// Copy is Bahasa Malaysia. Values marked PLACEHOLDER come from the demo and
+// must be replaced with real ones before launch.
 //
-// Copy rules:
-// - This is a drinking-water product, not medicine. Never claim it treats, cures
-//   or prevents any disease, and no health testimonials (Food Act 1983 s17).
-// - No invented numbers. A figure appears only once it is verified.
-// - No em dashes in visible copy. Use a full stop, comma or colon.
-//
-// Page plan, feeling curve and score: scrollcraft/builds/zedox/BRIEF.md
+// Copy rule: this is a drinking-water product, not medicine. Never claim it
+// treats, cures or prevents any disease (see footer.disclaimer).
 
 export const demo = {
-  // While contact.whatsapp is empty, order buttons preview the message instead of opening wa.me.
+  // Shows the yellow banner and, while contact.whatsapp is empty, a preview
+  // modal of the WhatsApp message instead of opening wa.me.
   enabled: true,
-  note: "Harga dalam paparan ini adalah placeholder dan akan dikemas kini.",
+  banner: "DEMO KONSEP — Harga, testimoni & spesifikasi adalah placeholder",
 };
 
 export const contact = {
-  whatsapp: "60176663171", // digits only, country code first. Empty = demo preview dialog.
+  whatsapp: "60176663171", // digits only, country code first. Empty = demo preview modal.
   whatsappDisplay: "+60 17-666 3171",
   tiktokHandle: "zedoxtechnology",
   ssm: "XXXXXXXX-X", // PLACEHOLDER
@@ -26,113 +22,220 @@ export const contact = {
 export const site = {
   brand: "ZEDOX",
   brandSub: "TECHNOLOGY",
-  title: "Zedox Technology: botol hidrogen portable",
+  title: "Zedox Technology — Botol Hidrogen Portable",
   description:
-    "Botol hidrogen mudah alih 400ml. Isi air, tekan sekali, siap dalam 3 minit. Order terus melalui WhatsApp, hantar seluruh Malaysia.",
-  cta: "Order via WhatsApp", // the one label for the one action, used everywhere
+    "Botol hidrogen mudah alih. Tekan satu butang, tunggu 3 minit, dan nikmati air kaya hidrogen di rumah, pejabat atau gym. Hantar seluruh Malaysia.",
 };
 
-// Clip and stills, all cut from the same AI-generated clip (see BRIEF.md).
+export const nav = [
+  { label: "Kenapa", href: "#kenapa" },
+  { label: "Cara Guna", href: "#cara" },
+  { label: "Produk", href: "#produk" },
+  { label: "FAQ", href: "#faq" },
+];
+
+// Optional top bar with a live countdown. Set endsAt to null to hide it.
+export const promo = {
+  text: "Promo Pelancaran",
+  endsAt: "2026-11-30T23:59:59+08:00" as string | null, // PLACEHOLDER
+};
+
+// Real product media. Files go in /public. Empty = the drawn spotlight bottle is used.
 export const media = {
-  heroBottle: "/media/hero-bottle.jpg",
-  heroFar: "/media/hero-far.jpg",
-  cycle: "/media/cycle.mp4", // 720x1280, a keyframe on every frame, no audio
-  cycleMobile: "/media/cycle-mobile.mp4",
-  cyclePoster: "/media/cycle-poster.jpg",
-  macro: "/media/bubbles-macro.jpg",
-  closeBottle: "/media/close-bottle.jpg",
+  heroVideo: "", // e.g. "/media/hero-bubbles.mp4" (macro bubbles, 10–15 s loop)
+  heroPoster: "", // e.g. "/media/hero-poster.jpg"
 };
 
-// Act 1: recognition.
 export const hero = {
-  title: "Air berhidrogen, dari botol anda sendiri.",
-  lead: "Botol mudah alih 400ml. Isi air, tekan sekali, siap dalam 3 minit.",
-  beat: "Nampak biasa, sampai anda tekan butang di tapaknya.",
-  imageAlt:
-    "Botol hidrogen Zedox separuh berisi air, berdiri di atas batu dalam bilik gelap",
+  proof: "7K+ likes di TikTok",
+  pill: "Stok terhad · Hantar seluruh Malaysia",
+  titleLead: "Air minuman harian,",
+  titleAccent: "diperkaya hidrogen.",
+  lead: "Botol hidrogen mudah alih — tekan satu butang, tunggu beberapa minit, dan nikmati air kaya hidrogen di mana-mana sahaja. Di rumah, di pejabat, atau di gym.",
+  primaryCta: "Order via WhatsApp →",
+  secondaryCta: { label: "Tengok cara guna", href: "#cara" },
 };
 
-// Act 2: curiosity. Authored silence before the clip: no media.
-export const inside = {
-  title: "Apa yang berlaku dalam 3 minit?",
-  body: [
-    "Di tapak botol ada elektrod dan membran SPE/PEM. Bila butang ditekan, arus kecil memisahkan sebahagian air, dan hidrogen larut terus ke dalam air dalam botol.",
-    "Membran memisahkan gas sampingan, supaya yang tinggal untuk diminum hanyalah air berhidrogen.",
+export const trust = [
+  "Penghantaran seluruh Malaysia",
+  "Bayaran FPX / e-wallet",
+  "Warranty & support WhatsApp",
+  "Caj USB-C",
+];
+
+// Scrolling strip under the hero.
+export const marquee = [
+  "Isi",
+  "Tekan",
+  "Minum",
+  "Siap dalam 3 minit",
+  "Caj USB-C",
+  "Membran SPE/PEM",
+  "Kaca borosilikat",
+];
+
+export type IconName = "membrane" | "clock" | "phone" | "drop";
+
+export const features = {
+  eyebrow: "Kenapa Zedox",
+  title: "Direka untuk rutin harian anda",
+  subtitle:
+    "Ringan, senang dibawa, dan senang digunakan — tak perlu mesin besar di dapur.",
+  items: [
+    {
+      icon: "membrane" as IconName,
+      title: "Membran SPE/PEM",
+      body: "Memisahkan gas sampingan supaya hanya air berhidrogen yang anda minum.",
+    },
+    {
+      icon: "clock" as IconName,
+      stat: "3:00", // the large bento card
+      title: "Siap dalam 3 minit",
+      body: "Satu tekan butang — kitaran automatik dengan paparan masa.",
+    },
+    {
+      icon: "phone" as IconName,
+      title: "Caj USB-C",
+      body: "Sekali caj untuk banyak kitaran. Sesuai untuk travel.",
+    },
+    {
+      icon: "drop" as IconName,
+      title: "Bahan food-grade",
+      body: "Kaca borosilikat & badan aluminium — selamat dan tahan lama.",
+    },
   ],
 };
 
-// Act 3: the peak. Positions are act progress (see the cue note in Peak.tsx).
-export const peak = {
-  steps: [
-    {
-      title: "Isi.",
-      body: "Air suling atau air mineral. Bukan air panas, bukan air bergas.",
-    },
-    {
-      title: "Tekan.",
-      body: "Lampu biru menyala dan gelembung halus mula naik dari tapak.",
-    },
-    {
-      title: "Tunggu 3 minit.",
-      body: "Kemudian minum dalam masa 15 hingga 30 minit.",
-    },
-  ],
-  pressAt: 0.22, // where the cycle glass switches on
-  doneAt: 0.92, // where its countdown reaches 0:00
-};
-
-// Act 4: substance, as plain labels.
-export const facts = {
-  title: "Yang anda dapat.",
-  rows: [
-    { k: "Kapasiti", v: "400 ml" },
-    { k: "Bekas", v: "Kaca borosilikat" },
-    { k: "Badan", v: "Aluminium" },
-    { k: "Penjana", v: "Elektrod, membran SPE/PEM" },
-    { k: "Kitaran", v: "3 minit, satu butang" },
-    { k: "Caj", v: "USB-C" },
-    { k: "Warranty", v: "1 tahun*" },
-  ],
-  footnote: "*Terma warranty dimaklumkan semasa order.",
-  imageAlt:
-    "Gelembung halus naik melalui air dalam botol kaca yang bercahaya biru",
-};
-
-// Act 5: range.
-export const finishes = {
-  title: "Pilih warna anda.",
-  lead: "Tiga kemasan. Pilihan anda terus masuk ke mesej order.",
-  pick: "Pilih",
-  picked: "Dipilih",
-  note: {
-    title: "Beli dua?",
-    body: "Pakej Beli 2 untuk pasangan atau ibu bapa. Pilih pakej di bahagian order.",
+// Pinned scroll story. Each phase takes a share of the scroll (see CycleStory.tsx).
+export const cycle = {
+  eyebrow: "Cara Guna",
+  title: "Isi. Tekan. Minum.",
+  // Real clip of the cycle, scrubbed by scroll. Files go in /public. Empty src = drawn bottle.
+  video: {
+    src: "/media/cycle.mp4", // 720x1280 portrait, AI-generated (pour 0–3.2s, display on 3.2s, bubbles from 3.6s)
+    srcMobile: "/media/cycle-mobile.mp4", // same clip at 540x960 for phones
+    poster: "/media/cycle-poster.jpg", // first frame, shown while the clip loads
+    aspect: "9/16", // frame shape of the clip; the stage takes this shape so nothing is cropped
+    showTimer: true, // the 03:00 badge beside the bottle
   },
+  // Where the Isi and Tekan phases end, as a share of the scroll (and of the clip).
+  phaseEnds: [0.4, 0.86] as [number, number],
+  phases: [
+    {
+      label: "Isi",
+      title: "Isi air bersih",
+      body: "Air suling atau air mineral. Elakkan air panas, air bergas atau minuman manis.",
+    },
+    {
+      label: "Tekan",
+      title: "Tekan sekali",
+      body: "Kitaran 3 minit bermula. Gelembung halus naik dengan lampu biru.",
+    },
+    {
+      label: "Minum",
+      title: "Minum segar",
+      body: "Minum dalam masa 15–30 minit selepas kitaran tamat untuk hasil terbaik.",
+    },
+  ],
 };
 
 export const product = {
+  tag: "HARGA PROMO",
   name: "Botol Hidrogen Portable",
-  cycleSeconds: 180,
+  model: "Model 400ml · Generasi terbaru",
+  compareAt: "RM XXX", // PLACEHOLDER
+  priceNote: "*Harga placeholder untuk demo",
+  cycleSeconds: 180, // shown on the bottle display
   colors: [
     { name: "Gunmetal", hex: "#4a5965" },
     { name: "Silver", hex: "#d9dde0" },
-    { name: "Hitam", hex: "#16181a" },
+    { name: "Hitam", hex: "#111111" },
+  ],
+  specs: [
+    "Kapasiti 400ml",
+    "Membran SPE/PEM",
+    "Caj USB-C",
+    "Kitaran 3 minit",
+    "Kaca borosilikat",
+    "Warranty 1 tahun*",
   ],
   // PLACEHOLDER prices. The selected bundle is added to the WhatsApp message.
   bundles: [
     { id: "1", label: "1 botol", price: "RM XXX", note: "Untuk diri sendiri" },
-    {
-      id: "2",
-      label: "Beli 2",
-      price: "RM XXX",
-      note: "Untuk pasangan atau ibu bapa",
-    },
-  ] as { id: string; label: string; price: string; note: string }[],
+    { id: "2", label: "Beli 2", price: "RM XXX", note: "Jimat RM XX · untuk pasangan atau ibu bapa", badge: "Popular" },
+  ] as { id: string; label: string; price: string; note: string; badge?: string }[],
+  ctaWhatsapp: "Order via WhatsApp",
 };
 
-// Act 6: reassurance.
+// Zedox vs a typical cheap online bottle. Keep every row factual and checkable.
+// ok: true = tick, false = cross, null = unknown.
+export const compare = {
+  eyebrow: "Bandingkan",
+  title: "Zedox vs botol murah online",
+  subtitle: "Bentuk botol mungkin sama. Yang beza ialah apa yang ada di belakangnya.",
+  columns: ["Zedox", "Botol murah online"],
+  rows: [
+    { feature: "Membran SPE/PEM dengan saluran gas sampingan", zedox: { text: "Ya", ok: true }, other: { text: "Tak dinyatakan", ok: null } },
+    { feature: "Bacaan hidrogen (ppb) diuji", zedox: { text: "Akan dikemaskini", ok: null }, other: { text: "Dakwaan tanpa ujian", ok: false } }, // PLACEHOLDER until measured
+    { feature: "Kaca borosilikat food-grade", zedox: { text: "Ya", ok: true }, other: { text: "Kadang-kadang plastik", ok: null } },
+    { feature: "Warranty di Malaysia", zedox: { text: "1 tahun", ok: true }, other: { text: "Tiada", ok: false } },
+    { feature: "Support terus melalui WhatsApp", zedox: { text: "Ya", ok: true }, other: { text: "Chat platform sahaja", ok: false } },
+    { feature: "Penjual berdaftar SSM", zedox: { text: "Ya", ok: true }, other: { text: "Tidak diketahui", ok: null } },
+  ] as { feature: string; zedox: { text: string; ok: boolean | null }; other: { text: string; ok: boolean | null } }[],
+};
+
+// PLACEHOLDER: replace with real customer quotes (with their permission).
+export const testimonials = {
+  eyebrow: "Testimoni",
+  title: "Apa kata pelanggan",
+  note: "Placeholder — akan diganti dengan testimoni sebenar (dengan izin pelanggan).",
+  items: [
+    {
+      initial: "A",
+      quote:
+        "[Ruang untuk testimoni sebenar pelanggan — screenshot WhatsApp atau review.]",
+      who: "Nama Pelanggan · Lokasi",
+    },
+    {
+      initial: "B",
+      quote:
+        "[Ruang untuk testimoni sebenar pelanggan — screenshot WhatsApp atau review.]",
+      who: "Nama Pelanggan · Lokasi",
+    },
+    {
+      initial: "C",
+      quote:
+        "[Ruang untuk testimoni sebenar pelanggan — screenshot WhatsApp atau review.]",
+      who: "Nama Pelanggan · Lokasi",
+    },
+  ],
+};
+
+export const tiktok = {
+  eyebrow: "TikTok",
+  title: "Tengok demo penuh di TikTok",
+  subtitle: "Video sebenar boleh di-embed terus di sini.",
+  // PLACEHOLDER: point each at its own video URL.
+  videos: [
+    {
+      title: "Unboxing",
+      url: `https://www.tiktok.com/@${contact.tiktokHandle}`,
+    },
+    {
+      title: "Cara guna",
+      url: `https://www.tiktok.com/@${contact.tiktokHandle}`,
+    },
+    {
+      title: "Cuci botol",
+      url: `https://www.tiktok.com/@${contact.tiktokHandle}`,
+    },
+    { title: "Q&A", url: `https://www.tiktok.com/@${contact.tiktokHandle}` },
+  ],
+};
+
 export const faqs = {
-  title: "Soalan lazim.",
+  eyebrow: "FAQ",
+  title: "Soalan lazim",
   items: [
     {
       q: "Air apa yang sesuai digunakan?",
@@ -140,7 +243,7 @@ export const faqs = {
     },
     {
       q: "Berapa lama sekali caj boleh tahan?",
-      a: "Bergantung kepada kekerapan penggunaan, biasanya beberapa hari untuk penggunaan harian. Spesifikasi tepat akan dikemas kini.",
+      a: "Bergantung kepada kekerapan penggunaan — biasanya beberapa hari untuk penggunaan harian. (Spesifikasi tepat akan dikemaskini.)",
     },
     {
       q: "Macam mana nak cuci botol?",
@@ -148,34 +251,28 @@ export const faqs = {
     },
     {
       q: "Berapa lama penghantaran?",
-      a: "Semenanjung 2 hingga 4 hari bekerja, Sabah dan Sarawak 4 hingga 7 hari bekerja.", // PLACEHOLDER
+      a: "Semenanjung 2–4 hari bekerja, Sabah & Sarawak 4–7 hari bekerja. (Placeholder)",
     },
     {
       q: "Ada warranty?",
-      a: "Ya. Terma warranty dan cara claim dimaklumkan semasa order melalui WhatsApp.",
+      a: "Ya — maklumat warranty dan cara claim akan dinyatakan di sini.",
     },
   ],
 };
 
-// Act 7: resolve.
-export const close = {
-  title: "Siap. Sekarang, minum.",
-  lead: "Pilihan anda dihantar sebagai mesej WhatsApp. Kami balas dengan harga, penghantaran dan cara bayaran.",
-  colorLabel: "Warna",
-  bundleLabel: "Pakej",
-  qtyLabel: "Kuantiti",
-  imageAlt:
-    "Botol Zedox penuh air dengan gelembung halus dan tapak bercahaya biru",
+export const ctaBand = {
+  title: "Mula rutin hidrasi baru anda hari ini",
+  body: "Ada soalan? Tim kami sedia bantu melalui WhatsApp.",
+  cta: "Chat & Order Sekarang",
 };
 
 export const footer = {
   disclaimer:
     "Produk ini bukan ubat dan tidak bertujuan untuk mendiagnosis, merawat, menyembuh atau mencegah sebarang penyakit.",
-  copyright: "© 2026 Zedox Technology",
-  clipNote: "Visual botol dijana AI untuk tujuan ilustrasi.",
+  copyright: "© 2026 Zedox Technology.",
 };
 
-// WhatsApp order message, built from the current colour, quantity and bundle.
+// WhatsApp order message, built from the current colour and quantity.
 export function orderMessage(color: string, qty: number, bundle: string) {
   return `Hai Zedox! Saya nak order:\n\n• ${product.name}\n• Pakej: ${bundle}\n• Warna: ${color}\n• Kuantiti: ${qty}\n\nNama:\nAlamat:`;
 }
