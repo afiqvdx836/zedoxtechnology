@@ -3,6 +3,7 @@
 import { product } from "@/config/site";
 import { useOrder } from "./order/OrderProvider";
 import Bottle from "./ui/Bottle";
+import Icon from "./ui/Icon";
 import SpotlightStage from "./ui/SpotlightStage";
 import { btn } from "./ui/styles";
 
@@ -57,7 +58,7 @@ export default function Product() {
               <legend className="mb-2 text-[13px] font-semibold text-muted">
                 Warna: <span className="text-fg">{color}</span>
               </legend>
-              <div className="flex gap-2.5">
+              <div className="flex gap-3">
                 {product.colors.map((c) => (
                   <button
                     key={c.name}
@@ -66,7 +67,7 @@ export default function Product() {
                     aria-pressed={c.name === color}
                     onClick={() => setColor(c.name)}
                     style={{ background: c.hex }}
-                    className={`size-9 cursor-pointer rounded-full outline-2 outline-offset-2 ${c.name === color ? "outline-accent" : "outline-line"}`}
+                    className={`size-11 cursor-pointer rounded-full outline-2 outline-offset-2 ${c.name === color ? "outline-accent" : "outline-line"}`}
                   />
                 ))}
               </div>
@@ -76,13 +77,13 @@ export default function Product() {
               Kuantiti
             </div>
             <div className="mb-6 inline-flex items-center rounded-full border border-line" role="group" aria-labelledby="qty-label">
-              <button type="button" aria-label="Kurangkan" onClick={() => setQty(qty - 1)} className="size-10 cursor-pointer text-lg">
+              <button type="button" aria-label="Kurangkan" onClick={() => setQty(qty - 1)} className="size-11 cursor-pointer text-lg">
                 −
               </button>
               <span className="w-8 text-center font-bold tabular-nums" aria-live="polite">
                 {qty}
               </span>
-              <button type="button" aria-label="Tambah" onClick={() => setQty(qty + 1)} className="size-10 cursor-pointer text-lg">
+              <button type="button" aria-label="Tambah" onClick={() => setQty(qty + 1)} className="size-11 cursor-pointer text-lg">
                 +
               </button>
             </div>
@@ -93,8 +94,10 @@ export default function Product() {
 
             <ul className="mt-5 grid grid-cols-2 gap-2 text-[13px] text-muted">
               {product.specs.map((s) => (
-                <li key={s}>
-                  <span className="font-bold text-mint">✓ </span>
+                <li key={s} className="flex items-start gap-1.5">
+                  <span className="mt-0.5 shrink-0 text-mint">
+                    <Icon name="check" size={14} strokeWidth={2.5} />
+                  </span>
                   {s}
                 </li>
               ))}

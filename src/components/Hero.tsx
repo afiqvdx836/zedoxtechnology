@@ -1,5 +1,6 @@
 import { hero, media, trust } from "@/config/site";
 import Bottle from "./ui/Bottle";
+import HeroVideo from "./ui/HeroVideo";
 import Icon from "./ui/Icon";
 import SpotlightStage from "./ui/SpotlightStage";
 import OrderButton from "./order/OrderButton";
@@ -48,15 +49,7 @@ export default function Hero() {
 
         <SpotlightStage className="h-[440px] min-[900px]:h-[600px]">
           {media.heroVideo ? (
-            <video
-              className="absolute inset-0 -z-10 size-full object-cover"
-              src={media.heroVideo}
-              poster={media.heroPoster || undefined}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
+            <HeroVideo className="absolute inset-0 -z-10 size-full object-cover" src={media.heroVideo} poster={media.heroPoster || undefined} />
           ) : (
             <div className="h-[340px] animate-float drop-shadow-[0_30px_40px_rgb(0_0_0/0.6)] min-[900px]:h-[460px]">
               <Bottle id="hero-bottle" active />

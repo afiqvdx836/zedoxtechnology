@@ -9,7 +9,7 @@ export default function Testimonials() {
         <div className="grid gap-[18px] min-[900px]:grid-cols-3">
           {testimonials.items.map((t) => (
             <figure key={t.initial} className="rounded-[18px] border border-line bg-card p-[26px]">
-              <div className="mb-2.5 tracking-[2px] text-promo" aria-label="5 bintang">
+              <div className="mb-2.5 tracking-[2px] text-promo" role="img" aria-label="5 bintang">
                 ★★★★★
               </div>
               <blockquote className="mb-4 text-[15px]">“{t.quote}”</blockquote>
