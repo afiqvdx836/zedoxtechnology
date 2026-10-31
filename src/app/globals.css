@@ -1,66 +1,26 @@
 @import "tailwindcss";
 
+/* Tailwind names for the same palette, used by the order preview dialog. */
 @theme {
   --color-bg: #06111a;
-  --color-bg-2: #0b1a26;
   --color-card: #0f2232;
   --color-line: #1c3447;
   --color-fg: #e8f4fb;
   --color-muted: #8aa6b8;
   --color-accent: #2ec5ff;
-  --color-mint: #5ef0d6;
-  --color-promo: #ffcc4d;
   --color-ink: #04202b;
-  --color-wa: #25d366;
-
-  --color-deep: #030a10;
-
-  --font-sans: var(--font-jakarta), system-ui, sans-serif;
-  --font-display: var(--font-bricolage), var(--font-jakarta), system-ui, sans-serif;
-
-  --animate-float: float 5s ease-in-out infinite;
-  --animate-rise: rise 3s linear infinite;
-  --animate-marquee: marquee 30s linear infinite;
-  --animate-flicker: flicker 6s ease-in-out infinite;
-
-  @keyframes float {
-    50% { transform: translateY(-12px); }
-  }
-  @keyframes marquee {
-    to { transform: translateX(-50%); }
-  }
-  @keyframes flicker {
-    0%, 100% { opacity: 0.9; }
-    50% { opacity: 0.7; }
-  }
-  @keyframes rise {
-    0% { transform: translateY(0); opacity: 0; }
-    15% { opacity: 0.9; }
-    100% { transform: translateY(-120px); opacity: 0; }
-  }
 }
 
-@utility bg-grad {
-  background-image: linear-gradient(135deg, var(--color-accent), var(--color-mint));
-}
-
-@utility text-grad {
-  background-image: linear-gradient(135deg, var(--color-accent), var(--color-mint));
-  background-clip: text;
-  color: transparent;
-}
-
-@utility wrap {
-  @apply mx-auto w-full max-w-[1120px] px-5;
-}
-
-@layer base {
-  html { scroll-behavior: smooth; }
-  body { @apply bg-bg font-sans leading-relaxed text-fg overflow-x-hidden; }
-  h1, h2, h3 { @apply font-display font-extrabold tracking-tight; }
-  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; }
+/* scroll-craft tokens: six colours and two faces. The engine stylesheet
+   (src/scrollcraft/scrollcraft.css) derives everything else from these. */
+:root {
+  --sc-canvas: #06111a;
+  --sc-surface: #0d1c29;
+  --sc-ink: #e8f4fb;
+  --sc-ink-soft: #8fabbd;
+  --sc-accent: #2ec5ff;
+  --sc-accent-ink: #04202b;
+  --sc-font-display: var(--font-bricolage), system-ui, sans-serif;
+  --sc-font-text: var(--font-jakarta), system-ui, sans-serif;
+  --sc-shadow-color: 205 60% 3%;
 }

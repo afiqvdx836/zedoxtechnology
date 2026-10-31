@@ -1,0 +1,915 @@
+/* Zedox page styles. Page classes only (zx-*): the engine's .sc-stage and
+   [data-sc-*] rules are the mechanism and are not restyled here. Acts read the
+   engine's --sc-p (0..1) for anything bespoke. Breakpoint 860px matches the
+   engine's own mobile switch. */
+
+/* ------------------------------------------------------------- shared -- */
+.zx-h2 {
+  font-size: var(--sc-t-2xl);
+  letter-spacing: var(--sc-track-snug);
+  font-weight: 700;
+}
+.zx-body {
+  color: var(--sc-ink-soft);
+  max-width: 52ch;
+  text-wrap: pretty;
+  margin: 0;
+}
+.zx-small {
+  font-size: var(--sc-t-xs);
+  color: var(--sc-ink-soft);
+  margin: 0;
+}
+
+.zx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sc-2);
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border: 0;
+  border-radius: var(--sc-r-pill);
+  background: var(--sc-accent);
+  color: var(--sc-accent-ink);
+  font-weight: 700;
+  font-size: var(--sc-t-sm);
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow:
+    var(--sc-e2),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+  cursor: pointer;
+  transition:
+    transform 140ms var(--sc-ease-out),
+    background-color 160ms var(--sc-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .zx-btn:hover {
+    background: color-mix(in oklab, var(--sc-accent) 86%, white);
+  }
+}
+.zx-btn:active {
+  transform: scale(0.97);
+}
+.zx-btn--sm {
+  min-height: 40px;
+  padding: 0 1rem;
+  font-size: 0.82rem;
+}
+.zx-btn--lg {
+  min-height: 54px;
+  padding: 0 1.8rem;
+  font-size: var(--sc-t-base);
+}
+
+.zx-chip {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid var(--sc-hairline-strong);
+  border-radius: var(--sc-r-pill);
+  background: transparent;
+  color: var(--sc-ink);
+  font-weight: 600;
+  font-size: var(--sc-t-sm);
+  cursor: pointer;
+  transition:
+    border-color 160ms var(--sc-ease-out),
+    background-color 160ms var(--sc-ease-out);
+}
+.zx-chip[aria-pressed="true"] {
+  background: var(--sc-accent);
+  border-color: var(--sc-accent);
+  color: var(--sc-accent-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .zx-chip:hover {
+    border-color: var(--sc-accent);
+  }
+}
+.zx-chip:active {
+  transform: scale(0.97);
+}
+
+/* ---------------------------------------------------------------- bar -- */
+.zx-bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--sc-z-chrome);
+  height: 56px;
+  padding-inline: var(--sc-gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sc-4);
+  background: color-mix(in oklab, var(--sc-canvas) 88%, transparent);
+  border-bottom: 1px solid var(--sc-hairline);
+}
+.zx-bar__home {
+  text-decoration: none;
+}
+.zx-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sc-2);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.zx-logo__mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--sc-accent);
+  color: var(--sc-accent-ink);
+  font-family: var(--sc-font-display);
+}
+.zx-logo__word {
+  line-height: 1.05;
+  font-size: 0.95rem;
+}
+.zx-logo__word small {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--sc-ink-soft);
+}
+
+/* ------------------------------------------------- cycle glass (signature) --
+   Phones: a small glass in the bar. Wider screens: a tall glass on the right
+   edge. --level (0..1) is the water, data-state is idle | run | done. */
+.zx-glass {
+  display: flex;
+  align-items: center;
+  gap: var(--sc-2);
+  --level: 0;
+  --fizz: 0;
+}
+.zx-glass__tube {
+  position: relative;
+  overflow: hidden;
+  width: 12px;
+  height: 34px;
+  border: 1px solid color-mix(in oklab, var(--sc-ink) 34%, transparent);
+  border-radius: 4px 4px 6px 6px;
+  background: color-mix(in oklab, var(--sc-ink) 5%, transparent);
+}
+.zx-glass__water {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--sc-accent) 40%, transparent),
+    color-mix(in oklab, var(--sc-accent) 16%, transparent)
+  );
+  transform-origin: 50% 100%;
+  transform: scaleY(var(--level));
+}
+.zx-glass[data-state="run"] .zx-glass__water,
+.zx-glass[data-state="done"] .zx-glass__water {
+  background: linear-gradient(
+    to top,
+    var(--sc-accent),
+    color-mix(in oklab, var(--sc-accent) 45%, transparent)
+  );
+  opacity: calc(0.75 + var(--fizz) * 0.25);
+}
+.zx-glass__bubble {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #f2fbff;
+  opacity: 0;
+  will-change: transform;
+}
+.zx-glass:not([data-state="idle"]) .zx-glass__bubble {
+  opacity: 0.9;
+}
+.zx-glass__read {
+  font-family: var(--sc-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--sc-ink-soft);
+  font-variant-numeric: tabular-nums;
+  min-width: 5ch;
+}
+.zx-glass:not([data-state="idle"]) .zx-glass__read {
+  color: var(--sc-accent);
+}
+
+@media (min-width: 861px) {
+  .zx-glass {
+    position: fixed;
+    right: 22px;
+    top: 50%;
+    translate: 0 -50%;
+    flex-direction: column;
+    gap: var(--sc-3);
+  }
+  .zx-glass__tube {
+    width: 18px;
+    height: 30vh;
+    border-radius: 6px 6px 9px 9px;
+  }
+  .zx-glass__bubble {
+    width: 4px;
+    height: 4px;
+  }
+  .zx-glass__read {
+    writing-mode: horizontal-tb;
+    min-width: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zx-glass__bubble {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------- 1 · hero -- */
+.zx-hero__stage {
+  background: var(--sc-canvas);
+}
+.zx-hero__far {
+  position: absolute;
+  inset: -6%;
+  width: 112%;
+  height: 112%;
+  max-width: none;
+  object-fit: cover;
+  opacity: 0.55;
+  transform: translate3d(0, calc(var(--sc-p, 0) * -2%), 0)
+    scale(calc(1.04 + var(--sc-p, 0) * 0.04));
+}
+.zx-hero__cone {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: min(46rem, 70vw);
+  right: calc(12vw + min(23rem, 26vh) - min(23rem, 35vw));
+  background: linear-gradient(
+    180deg,
+    rgb(200 244 255 / 0.22),
+    rgb(46 197 255 / 0.05) 60%,
+    transparent 85%
+  );
+  clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
+  filter: blur(18px);
+  opacity: calc(1 - var(--sc-p, 0) * 0.4);
+}
+.zx-hero__bottle {
+  position: absolute;
+  bottom: -2svh;
+  right: 12vw;
+  height: 96svh;
+  width: auto;
+  max-width: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 52%,
+    #000 58%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 52%,
+    #000 58%,
+    transparent 100%
+  );
+  transform-origin: 50% 92%;
+  transform: translate3d(0, calc(var(--sc-p, 0) * -5%), 0)
+    scale(calc(1 + var(--sc-p, 0) * 0.08));
+}
+/* Near plane: soft out-of-focus bubbles in front of the bottle, travelling faster. */
+.zx-hero__near {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translate3d(0, calc(var(--sc-p, 0) * -38svh), 0);
+}
+.zx-hero__near i {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    rgb(235 250 255 / 0.55),
+    rgb(46 197 255 / 0.12) 60%,
+    transparent 70%
+  );
+  border: 1px solid rgb(220 245 255 / 0.22);
+}
+.zx-hero__near i:nth-child(1) {
+  width: 26px;
+  height: 26px;
+  right: 24vw;
+  top: 62%;
+  filter: blur(2px);
+}
+.zx-hero__near i:nth-child(2) {
+  width: 12px;
+  height: 12px;
+  right: 31vw;
+  top: 78%;
+}
+.zx-hero__near i:nth-child(3) {
+  width: 40px;
+  height: 40px;
+  right: 9vw;
+  top: 84%;
+  filter: blur(4px);
+}
+.zx-hero__near i:nth-child(4) {
+  width: 9px;
+  height: 9px;
+  right: 19vw;
+  top: 92%;
+}
+.zx-hero__near i:nth-child(5) {
+  width: 18px;
+  height: 18px;
+  right: 36vw;
+  top: 98%;
+  filter: blur(1px);
+}
+.zx-hero__near i:nth-child(6) {
+  width: 30px;
+  height: 30px;
+  right: 14vw;
+  top: 108%;
+  filter: blur(3px);
+}
+.zx-hero__near i:nth-child(7) {
+  width: 14px;
+  height: 14px;
+  right: 27vw;
+  top: 118%;
+}
+
+.zx-hero__copy {
+  position: absolute;
+  z-index: var(--sc-z-copy);
+  left: var(--sc-gutter);
+  bottom: clamp(3rem, 14vh, 9rem);
+  width: min(48rem, 52vw);
+  margin: 0;
+}
+.zx-hero__title {
+  font-size: clamp(2.4rem, 1.2rem + 4vw, 4.6rem);
+  font-weight: 700;
+}
+.zx-hero__lead {
+  margin: var(--sc-4) 0 var(--sc-6);
+  max-width: 38ch;
+  font-size: var(--sc-t-lg);
+  line-height: 1.45;
+  color: var(--sc-ink-soft);
+}
+.zx-hero__beat {
+  font-family: var(--sc-font-display);
+  font-size: var(--sc-t-2xl);
+  line-height: 1.08;
+  letter-spacing: var(--sc-track-snug);
+  font-weight: 600;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+@media (max-width: 860px) {
+  .zx-hero__bottle {
+    right: auto;
+    left: 50%;
+    translate: -50% 0;
+    height: 64svh;
+  }
+  .zx-hero__cone {
+    right: auto;
+    left: 50%;
+    translate: -50% 0;
+    width: 90vw;
+  }
+  .zx-hero__copy {
+    top: calc(56px + 4svh);
+    bottom: auto;
+    right: var(--sc-gutter);
+    width: auto;
+  }
+  .zx-hero__title {
+    font-size: var(--sc-t-2xl);
+  }
+  .zx-hero__lead {
+    font-size: var(--sc-t-base);
+    margin: var(--sc-3) 0 var(--sc-5);
+  }
+  .zx-hero__beat {
+    font-size: var(--sc-t-xl);
+  }
+  .zx-hero__near i:nth-child(n) {
+    right: auto;
+  }
+  .zx-hero__near i:nth-child(1) {
+    left: 14%;
+  }
+  .zx-hero__near i:nth-child(2) {
+    left: 70%;
+  }
+  .zx-hero__near i:nth-child(3) {
+    left: 80%;
+  }
+  .zx-hero__near i:nth-child(4) {
+    left: 28%;
+  }
+  .zx-hero__near i:nth-child(5) {
+    left: 62%;
+  }
+  .zx-hero__near i:nth-child(6) {
+    left: 8%;
+  }
+  .zx-hero__near i:nth-child(7) {
+    left: 44%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zx-hero__far,
+  .zx-hero__bottle,
+  .zx-hero__near {
+    transform: none;
+  }
+}
+
+/* -------------------------------------------------------- 2 · inside -- */
+.zx-inside {
+  padding-block: var(--sc-10) var(--sc-9);
+}
+.zx-inside__col {
+  margin-left: auto;
+  max-width: 34rem;
+  margin-right: 6vw;
+}
+.zx-inside__col > * + * {
+  margin-top: var(--sc-4);
+}
+.zx-inside__col .zx-h2 {
+  margin-bottom: var(--sc-5);
+}
+@media (max-width: 860px) {
+  .zx-inside {
+    padding-block: var(--sc-9) var(--sc-8);
+  }
+  .zx-inside__col {
+    margin: 0;
+  }
+}
+
+/* ---------------------------------------------------------- 3 · peak -- */
+.zx-peak__stage {
+  background: var(--sc-canvas);
+}
+.zx-peak__frame {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: max(7vw, 4rem);
+  aspect-ratio: 9 / 16;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(180deg, transparent 4%, #000 16%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(180deg, transparent 4%, #000 16%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+.zx-peak__scrim {
+  display: none;
+}
+.zx-peak__copy {
+  position: absolute;
+  z-index: var(--sc-z-copy);
+  left: var(--sc-gutter);
+  top: 50%;
+  translate: 0 -50%;
+  width: min(34rem, 44vw);
+}
+.zx-peak__title {
+  font-size: var(--sc-t-4xl);
+  font-weight: 700;
+}
+.zx-peak__body {
+  margin: var(--sc-5) 0 0;
+  font-size: var(--sc-t-lg);
+  line-height: 1.45;
+  color: var(--sc-ink-soft);
+  max-width: 30ch;
+}
+@media (max-width: 860px) {
+  .zx-peak__frame {
+    inset: 0;
+    right: 0;
+    aspect-ratio: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .zx-peak__scrim {
+    display: block;
+  }
+  .zx-peak__copy {
+    top: auto;
+    translate: none;
+    bottom: clamp(2.5rem, 9svh, 5rem);
+    right: var(--sc-gutter);
+    width: auto;
+  }
+  .zx-peak__title {
+    font-size: var(--sc-t-3xl);
+  }
+  .zx-peak__body {
+    font-size: var(--sc-t-base);
+  }
+}
+
+/* --------------------------------------------------------- 4 · facts -- */
+.zx-facts {
+  padding-top: var(--sc-7);
+}
+.zx-facts__grid {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: center;
+}
+.zx-facts__media {
+  margin: 0;
+  border-radius: var(--sc-r-lg);
+  overflow: hidden;
+  box-shadow: var(--sc-e3);
+}
+.zx-facts__media img {
+  width: 100%;
+  height: auto;
+}
+.zx-facts__text > * + * {
+  margin-top: var(--sc-6);
+}
+.zx-facts__list {
+  margin: 0;
+  border-top: 1px solid var(--sc-hairline);
+}
+.zx-facts__list > div {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: var(--sc-4);
+  padding: var(--sc-4) 0;
+  border-bottom: 1px solid var(--sc-hairline);
+}
+.zx-facts__list dt {
+  color: var(--sc-ink-soft);
+  font-size: var(--sc-t-sm);
+}
+.zx-facts__list dd {
+  margin: 0;
+  font-weight: 600;
+}
+@media (max-width: 860px) {
+  .zx-facts__grid {
+    grid-template-columns: 1fr;
+  }
+  .zx-facts__media {
+    max-width: 26rem;
+  }
+  .zx-facts__list > div {
+    grid-template-columns: 7rem 1fr;
+  }
+}
+
+/* --------------------------------------------------------- 5 · range -- */
+.zx-range__stage {
+  display: flex;
+  align-items: center;
+}
+.zx-rail {
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding-inline: var(--sc-gutter);
+  align-items: stretch;
+}
+.zx-rail > * {
+  flex: 0 0 auto;
+}
+.zx-rail__lead,
+.zx-rail__note {
+  width: min(24rem, 78vw);
+  align-self: center;
+}
+.zx-rail__lead > * + *,
+.zx-rail__note > * + * {
+  margin-top: var(--sc-4);
+}
+.zx-finish {
+  width: clamp(15rem, 24vw, 21rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sc-4);
+  padding: var(--sc-5);
+  border-radius: var(--sc-r-lg);
+  background: var(--sc-surface);
+  box-shadow: var(--sc-e2), var(--sc-edge);
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  transition: outline-color 200ms var(--sc-ease-out);
+}
+.zx-finish[data-on] {
+  outline-color: var(--sc-accent);
+}
+/* A brushed-metal cylinder in the finish's colour: a swatch, not a product photo. */
+.zx-finish__swatch {
+  width: 100%;
+  height: clamp(12rem, 36svh, 20rem);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(0 0 0 / 0.42),
+      transparent 22%,
+      rgb(255 255 255 / 0.28) 38%,
+      transparent 52%,
+      rgb(0 0 0 / 0.3) 86%,
+      rgb(0 0 0 / 0.5)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgb(255 255 255 / 0.03) 0 1px,
+      transparent 1px 3px
+    ),
+    var(--metal);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.25),
+    var(--sc-e1);
+}
+.zx-finish__name {
+  font-family: var(--sc-font-display);
+  font-size: var(--sc-t-xl);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: var(--sc-track-snug);
+}
+/* Items settle in sequence as the drawer is pulled; the lead is already there. */
+@media (prefers-reduced-motion: no-preference) {
+  .zx-finish,
+  .zx-rail__note {
+    --settle: clamp(0, calc(var(--sc-p, 0) * 6 - var(--i, 4) + 1.4), 1);
+    opacity: calc(0.55 + var(--settle) * 0.45);
+    translate: 0 calc((1 - var(--settle)) * 22px);
+  }
+  .zx-rail__note {
+    --i: 4;
+  }
+}
+
+/* ----------------------------------------------------------- 6 · faq -- */
+.zx-faq__grid {
+  display: grid;
+  grid-template-columns: 4fr 7fr;
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+.zx-faq__list {
+  border-top: 1px solid var(--sc-hairline);
+}
+.zx-faq__list details {
+  border-bottom: 1px solid var(--sc-hairline);
+}
+.zx-faq__list summary {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sc-4);
+  padding: var(--sc-4) 0;
+  min-height: 48px;
+  align-items: center;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.zx-faq__list summary::-webkit-details-marker {
+  display: none;
+}
+.zx-faq__list summary::after {
+  content: "+";
+  color: var(--sc-accent);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.zx-faq__list details[open] summary::after {
+  content: "–";
+}
+.zx-faq__list details p {
+  margin: 0 0 var(--sc-5);
+  color: var(--sc-ink-soft);
+  max-width: 60ch;
+}
+@media (max-width: 860px) {
+  .zx-faq__grid {
+    grid-template-columns: 1fr;
+    gap: var(--sc-5);
+  }
+}
+
+/* --------------------------------------------------------- 7 · close -- */
+.zx-close__stage {
+  background: var(--sc-canvas);
+}
+.zx-close__bottle {
+  position: absolute;
+  top: 0;
+  right: 8vw;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 52%,
+    #000 58%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 52%,
+    #000 58%,
+    transparent 100%
+  );
+}
+.zx-close__panel {
+  position: absolute;
+  z-index: var(--sc-z-copy);
+  left: var(--sc-gutter);
+  top: calc(56px + 8svh);
+  width: min(34rem, 48vw);
+}
+.zx-close__panel > * + * {
+  margin-top: var(--sc-5);
+}
+.zx-close__lead {
+  margin: var(--sc-3) 0 0;
+  color: var(--sc-ink-soft);
+  max-width: 44ch;
+}
+.zx-field {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.zx-field legend {
+  font-size: var(--sc-t-sm);
+  color: var(--sc-ink-soft);
+  margin-bottom: var(--sc-2);
+  padding: 0;
+}
+.zx-field__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sc-2);
+}
+.zx-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sc-2);
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: var(--sc-r-pill);
+  border: 1px solid var(--sc-hairline-strong);
+  cursor: pointer;
+  font-size: var(--sc-t-sm);
+  font-weight: 600;
+  transition:
+    border-color 160ms var(--sc-ease-out),
+    background-color 160ms var(--sc-ease-out);
+}
+.zx-option input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.zx-option:has(input:checked) {
+  border-color: var(--sc-accent);
+  background: color-mix(in oklab, var(--sc-accent) 12%, transparent);
+}
+.zx-option:has(input:focus-visible) {
+  outline: 2px solid var(--sc-accent);
+  outline-offset: 3px;
+}
+.zx-option--color i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.3);
+}
+.zx-option--bundle {
+  border-radius: var(--sc-r-md);
+  padding: var(--sc-2) var(--sc-4);
+  min-width: 11rem;
+}
+.zx-option--bundle small {
+  display: block;
+  font-weight: 500;
+  color: var(--sc-ink-soft);
+  font-size: var(--sc-t-xs);
+}
+.zx-close__act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sc-4);
+}
+.zx-qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--sc-hairline-strong);
+  border-radius: var(--sc-r-pill);
+}
+.zx-qty button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.zx-qty button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.zx-qty span {
+  min-width: 2ch;
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.zx-close__foot {
+  position: absolute;
+  z-index: var(--sc-z-copy);
+  inset: auto var(--sc-gutter) var(--sc-5);
+  display: grid;
+  gap: var(--sc-1);
+  font-size: var(--sc-t-xs);
+  color: var(--sc-ink-soft);
+}
+.zx-close__foot p {
+  margin: 0;
+  max-width: 90ch;
+}
+@media (max-width: 860px) {
+  .zx-close__bottle {
+    right: -18vw;
+    height: 70%;
+    opacity: 0.35;
+  }
+  .zx-close__panel {
+    top: calc(56px + 3svh);
+    right: var(--sc-gutter);
+    width: auto;
+  }
+  .zx-close__panel > * + * {
+    margin-top: var(--sc-4);
+  }
+  .zx-option--bundle {
+    min-width: 0;
+    flex: 1 1 9rem;
+  }
+}
+@media (max-width: 860px) and (max-height: 700px) {
+  .zx-close__lead {
+    display: none;
+  }
+}
+
+/* Phones: the clip is full-bleed under the copy, and the pour is the brightest
+   frame, so the band under the copy is taller and denser than the engine default. */
+@media (max-width: 860px) {
+  .zx-peak__scrim.sc-scrim--band {
+    background: linear-gradient(to top,
+      color-mix(in oklab, var(--sc-canvas) 96%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 86%, transparent) 26%,
+      color-mix(in oklab, var(--sc-canvas) 40%, transparent) 44%,
+      transparent 60%);
+  }
+}
+
+/* Narrow phones: the bar has to fit the mark, the glass and the full CTA label. */
+@media (max-width: 400px) {
+  .zx-bar { gap: var(--sc-2); }
+  .zx-logo__word small { display: none; }
+  .zx-glass__read { min-width: 0; font-size: 0.75rem; }
+  .zx-btn--sm { padding: 0 0.8rem; font-size: 0.78rem; }
+  .zx-option { padding: 0 0.75rem; }
+}
+/* Short phones: the close has to hold the panel and the footer in one screen. */
+@media (max-width: 860px) and (max-height: 700px) {
+  .zx-close__panel { top: calc(56px + 2svh); }
+  .zx-close__panel > * + * { margin-top: var(--sc-3); }
+  .zx-option--bundle small { display: none; }
+  .zx-option--bundle { min-height: 44px; }
+  .zx-close__foot { bottom: var(--sc-3); }
+}
