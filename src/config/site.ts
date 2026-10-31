@@ -112,13 +112,14 @@ export const cycle = {
   title: "Isi. Tekan. Minum.",
   // Real clip of the cycle, scrubbed by scroll. Files go in /public. Empty src = drawn bottle.
   video: {
-    src: "", // e.g. "/media/cycle.mp4" (landscape or square)
-    srcMobile: "", // optional portrait crop for phones
-    poster: "", // first frame as a .jpg, shown while the clip loads
+    src: "/media/cycle.mp4", // 720x1280 portrait, AI-generated (pour 0–3.2s, display on 3.2s, bubbles from 3.6s)
+    srcMobile: "/media/cycle-mobile.mp4", // same clip at 540x960 for phones
+    poster: "/media/cycle-poster.jpg", // first frame, shown while the clip loads
+    aspect: "9/16", // frame shape of the clip; the stage takes this shape so nothing is cropped
     showTimer: true, // the 03:00 badge beside the bottle
   },
   // Where the Isi and Tekan phases end, as a share of the scroll (and of the clip).
-  phaseEnds: [0.28, 0.85] as [number, number],
+  phaseEnds: [0.4, 0.86] as [number, number],
   phases: [
     {
       label: "Isi",

@@ -87,7 +87,10 @@ export default function CycleStory() {
             </div>
           </div>
 
-          <SpotlightStage className="order-1 h-[46svh] min-[900px]:order-2 min-[900px]:h-[78svh]">
+          <SpotlightStage
+            className={`order-1 h-[46svh] min-[900px]:order-2 min-[900px]:h-[78svh] ${useVideo ? "w-auto justify-self-center" : ""}`}
+            style={useVideo ? { aspectRatio: cycle.video.aspect } : undefined}
+          >
             {useVideo ? (
               <ScrollVideo
                 src={cycle.video.src}

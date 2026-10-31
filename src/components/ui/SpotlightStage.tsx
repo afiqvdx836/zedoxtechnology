@@ -1,8 +1,16 @@
 // A dark set with one overhead light, a lit floor and a soft shadow.
 // Children (the bottle, or a photo) sit centred on the floor.
-export default function SpotlightStage({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export default function SpotlightStage({
+  children,
+  className = "",
+  style,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
-    <div className={`relative isolate overflow-hidden rounded-[32px] border border-line bg-deep ${className}`}>
+    <div className={`relative isolate overflow-hidden rounded-[32px] border border-line bg-deep ${className}`} style={style}>
       {/* light cone */}
       <div
         aria-hidden
