@@ -56,6 +56,39 @@ export const hero = {
   secondaryCta: { label: "Tengok cara guna", href: "#cara" },
 };
 
+// Scroll chapters of the cinematic hero. The opening chapter takes its text from hero above.
+// Each chapter can point at its own clip; chapters sharing a clip load it once.
+// PLACEHOLDER: all use the cycle clip until dedicated hero clips exist (see docs/ai-video-prompts.md).
+const heroClip = {
+  src: "/media/cycle.mp4",
+  srcMobile: "/media/cycle-mobile.mp4",
+  poster: "/media/cycle-poster.jpg",
+};
+
+export const heroIntro = { id: "01", navLabel: "Zedox", video: heroClip };
+
+export const heroChapters = [
+  {
+    id: "02",
+    navLabel: "Cara guna",
+    eyebrow: "Cara guna",
+    title: "Isi. Tekan. Minum.",
+    description:
+      "Isi air bersih, tekan butang sekali, dan kitaran 3 minit berjalan sendiri dengan paparan masa.",
+    cta: { label: "Tengok langkah penuh", href: "#cara" },
+    video: heroClip,
+  },
+  {
+    id: "03",
+    navLabel: "Mudah alih",
+    eyebrow: "Mudah alih",
+    title: "Caj USB-C, bawa ke mana-mana.",
+    description:
+      "Botol 400ml dengan badan aluminium dan kaca borosilikat. Muat dalam beg untuk pejabat, gym dan travel.",
+    video: heroClip,
+  },
+];
+
 export const trust = [
   "Penghantaran seluruh Malaysia",
   "Bayaran FPX / e-wallet",
@@ -162,8 +195,20 @@ export const product = {
   // PLACEHOLDER prices. The selected bundle is added to the WhatsApp message.
   bundles: [
     { id: "1", label: "1 botol", price: "RM XXX", note: "Untuk diri sendiri" },
-    { id: "2", label: "Beli 2", price: "RM XXX", note: "Jimat RM XX · untuk pasangan atau ibu bapa", badge: "Popular" },
-  ] as { id: string; label: string; price: string; note: string; badge?: string }[],
+    {
+      id: "2",
+      label: "Beli 2",
+      price: "RM XXX",
+      note: "Jimat RM XX · untuk pasangan atau ibu bapa",
+      badge: "Popular",
+    },
+  ] as {
+    id: string;
+    label: string;
+    price: string;
+    note: string;
+    badge?: string;
+  }[],
   ctaWhatsapp: "Order via WhatsApp",
 };
 
@@ -172,16 +217,45 @@ export const product = {
 export const compare = {
   eyebrow: "Bandingkan",
   title: "Zedox vs botol murah online",
-  subtitle: "Bentuk botol mungkin sama. Yang beza ialah apa yang ada di belakangnya.",
+  subtitle:
+    "Bentuk botol mungkin sama. Yang beza ialah apa yang ada di belakangnya.",
   columns: ["Zedox", "Botol murah online"],
   rows: [
-    { feature: "Membran SPE/PEM dengan saluran gas sampingan", zedox: { text: "Ya", ok: true }, other: { text: "Tak dinyatakan", ok: null } },
-    { feature: "Bacaan hidrogen (ppb) diuji", zedox: { text: "Akan dikemaskini", ok: null }, other: { text: "Dakwaan tanpa ujian", ok: false } }, // PLACEHOLDER until measured
-    { feature: "Kaca borosilikat food-grade", zedox: { text: "Ya", ok: true }, other: { text: "Kadang-kadang plastik", ok: null } },
-    { feature: "Warranty di Malaysia", zedox: { text: "1 tahun", ok: true }, other: { text: "Tiada", ok: false } },
-    { feature: "Support terus melalui WhatsApp", zedox: { text: "Ya", ok: true }, other: { text: "Chat platform sahaja", ok: false } },
-    { feature: "Penjual berdaftar SSM", zedox: { text: "Ya", ok: true }, other: { text: "Tidak diketahui", ok: null } },
-  ] as { feature: string; zedox: { text: string; ok: boolean | null }; other: { text: string; ok: boolean | null } }[],
+    {
+      feature: "Membran SPE/PEM dengan saluran gas sampingan",
+      zedox: { text: "Ya", ok: true },
+      other: { text: "Tak dinyatakan", ok: null },
+    },
+    {
+      feature: "Bacaan hidrogen (ppb) diuji",
+      zedox: { text: "Akan dikemaskini", ok: null },
+      other: { text: "Dakwaan tanpa ujian", ok: false },
+    }, // PLACEHOLDER until measured
+    {
+      feature: "Kaca borosilikat food-grade",
+      zedox: { text: "Ya", ok: true },
+      other: { text: "Kadang-kadang plastik", ok: null },
+    },
+    {
+      feature: "Warranty di Malaysia",
+      zedox: { text: "1 tahun", ok: true },
+      other: { text: "Tiada", ok: false },
+    },
+    {
+      feature: "Support terus melalui WhatsApp",
+      zedox: { text: "Ya", ok: true },
+      other: { text: "Chat platform sahaja", ok: false },
+    },
+    {
+      feature: "Penjual berdaftar SSM",
+      zedox: { text: "Ya", ok: true },
+      other: { text: "Tidak diketahui", ok: null },
+    },
+  ] as {
+    feature: string;
+    zedox: { text: string; ok: boolean | null };
+    other: { text: string; ok: boolean | null };
+  }[],
 };
 
 // PLACEHOLDER: replace with real customer quotes (with their permission).
