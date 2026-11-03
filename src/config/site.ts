@@ -13,8 +13,8 @@ export const demo = {
 };
 
 export const contact = {
-  whatsapp: "60176663171", // digits only, country code first. Empty = demo preview modal.
-  whatsappDisplay: "+60 17-666 3171",
+  whatsapp: "60122033324", // digits only, country code first. Empty = demo preview modal.
+  whatsappDisplay: "+60 12-203 3324",
   tiktokHandle: "zedoxtechnology",
   ssm: "XXXXXXXX-X", // PLACEHOLDER
 };
@@ -288,13 +288,11 @@ export const testimonials = {
 export const tiktok = {
   eyebrow: "TikTok",
   title: "Tengok demo penuh di TikTok",
-  subtitle: "Video sebenar boleh di-embed terus di sini.",
-  // PLACEHOLDER: point each at its own video URL.
+  subtitle: "Video terus dari akaun TikTok kami.",
+  // id = TikTok video id (the number at the end of the video URL); it plays inline.
+  // Entries without an id are link cards to the profile. PLACEHOLDER: add ids as videos go up.
   videos: [
-    {
-      title: "Unboxing",
-      url: `https://www.tiktok.com/@${contact.tiktokHandle}`,
-    },
+    { title: "Video terkini", id: "7701704258101546247" },
     {
       title: "Cara guna",
       url: `https://www.tiktok.com/@${contact.tiktokHandle}`,
