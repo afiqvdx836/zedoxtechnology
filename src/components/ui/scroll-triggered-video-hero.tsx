@@ -66,20 +66,35 @@ const FilmGrain = () => (
 );
 
 // One <video> per distinct clip, so chapters that share a clip don't load it twice.
+// Clips pause once the hero is scrolled past, so phones aren't decoding it under later sections.
 const VideoBackground = ({
   chapters,
   currentChapterIndex,
+  playing,
 }: {
   chapters: Chapter[];
   currentChapterIndex: number;
+  playing: boolean;
 }) => {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    rootRef.current?.querySelectorAll("video").forEach((v) => {
+      if (playing) v.play().catch(() => {});
+      else v.pause();
+    });
+  }, [playing]);
+
   const clips = chapters.filter(
     (c, i) => chapters.findIndex((o) => o.video.src === c.video.src) === i,
   );
   const activeSrc = chapters[currentChapterIndex].video.src;
 
   return (
-    <div className="absolute inset-0 h-full w-full overflow-hidden bg-deep">
+    <div
+      ref={rootRef}
+      className="absolute inset-0 h-full w-full overflow-hidden bg-deep"
+    >
       {clips.map(({ id, video }) => (
         <motion.div
           key={id}
@@ -200,6 +215,7 @@ export default function CinematicScrol({
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const inView = useInView(containerRef, { margin: "0px 0px -40% 0px" });
+  const onScreen = useInView(containerRef);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -229,6 +245,7 @@ export default function CinematicScrol({
           <VideoBackground
             chapters={chapters}
             currentChapterIndex={activeIndex}
+            playing={onScreen}
           />
         </div>
 
